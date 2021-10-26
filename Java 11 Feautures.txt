@@ -1,0 +1,223 @@
+JAVA 11 FEATURES :
+`````````````````
+
+Developer Features:
+------------------
+
+ 1. New String Methods:
+
+  * Java 11 adds a few new methods to the String class: 
+    isBlank, lines, strip, stripLeading, stripTrailing, and repeat.
+
+  isBlank() – This instance method returns a boolean value. Empty Strings and Strings with only white spaces are treated as blank.
+
+EX:  import java.util.*;
+
+     public class Main {
+        public static void main(String[] args) throws Exception {
+          // Your code here!
+        
+           System.out.println(" ".isBlank()); //true
+        
+           String s = "Anupam";
+           System.out.println(s.isBlank()); //false
+           String s1 = "";
+           System.out.println(s1.isBlank()); //true
+        }
+     }
+
+  lines() - This method returns a stream of strings, which is a collection of all substrings split by lines.
+
+EX:  import java.util.stream.Collectors;
+
+     public class Main {
+        public static void main(String[] args) throws Exception {
+        
+          String str = "JD\nJD\nJD"; 
+          System.out.println(str);
+          System.out.println(str.lines().collect(Collectors.toList()));
+       }
+    }
+
+o/p will be like: JD
+                  JD
+                  JD
+                  [JD, JD, JD]
+
+    strip(),StripLeading, stripTrailing
+
+    strip() - Removes the white space from both, beginning and the end of string.
+
+EX:    public class Main {
+         public static void main(String[] args) throws Exception {
+           // Your code here!
+        
+           String str = " JD "; 
+           System.out.print("Start");
+           System.out.print(str.strip());
+           System.out.println("End");
+        
+           System.out.print("Start");
+           System.out.print(str.stripLeading());
+           System.out.println("End");
+        
+           System.out.print("Start");
+           System.out.print(str.stripTrailing());
+           System.out.println("End");
+        }
+      }
+
+o/p will be like: StartJDEnd
+                  StartJD End
+                  Start JDEnd
+
+    repeat(int) - The repeat method simply repeats the string that many number of times as mentioned in the method in the form of an int.
+
+EX:   public class Main {
+         public static void main(String[] args) throws Exception {
+           // Your code here!
+        
+           String str = "saketh".repeat(2);
+           System.out.println(str); 
+         }
+       }
+
+o/p: prints - sakethsaketh
+
+ * These methods can reduce the amount of boilerplate involved in manipulating string objects, and save us from having to import libraries.
+
+
+2. New File Methods:
+
+    easier to read and write Strings from files.
+    We can use the new "readString()" and "writeString()" static methods from the Files class
+
+
+3. Collection to an Array(Int function)
+
+    The java.util.Collection interface contains a new default toArray method which takes an IntFunction argument.
+
+    This makes it easier to create an array of the right type from a collection.
+
+
+4. Local-Variable Syntax for Lambda parameters
+
+    Support for using the local variable syntax (var keyword) in lambda parameters was added in Java 11.
+
+    allows "var" to be used to declare the formal parameters of an implicitly typed lambda expression.
+EX: (var s1, var s2) -> s1 + s2
+
+    We can make use of this feature to apply modifiers to our local variables, like defining a type annotation
+
+
+5. HTTP Client
+
+    The new HTTP client from the java.net.http package was introduced in Java 9. It has now become a standard feature in Java 11.
+    
+    The new API supports both HTTP/1.1 and HTTP/2.It is designed to improve the overall performance of sending requests by a client and receiving responses from the server.
+
+
+6. Nest Based Access Control
+
+    NBAC introduces nests in which an access control context that aligns with the notion of nested types in java language.
+
+    nests allow classes that are logically part of the same code entity but are compiled to distinct class files to accesss
+    each others private members without needing compilers to insert accessibility broadening bridge methods.
+
+EX: public class Main {
+ 
+      public void myPublic() {
+      }
+ 
+      private void myPrivate() {
+      }
+ 
+      class Nested {
+ 
+          public void nestedPublic() {
+              myPrivate();
+          }
+      }
+   }
+
+private method of the main class is accessible from the above-nested class in the above manner.
+But if we use Java Reflection, it will give an IllegalStateException.
+
+Java Reflection - provides ability to inspect and modify the runtime behavior of application.
+                  we can inspect a class, interface, enum, get their structure, methods and fields information at runtime even though class is not accessible at compile time.
+
+Java 11 nested access control addresses this concern in reflection.
+java.lang.Class introduces three methods in the reflection API: getNestHost(), getNestMembers(), and isNestmateOf().
+
+
+7. Running Java Files
+
+    A major change in this version is that we don't need to compile the Java source files with javac explicitly anymore:
+       $ javac HelloWorld.java
+       $ java HelloWorld 
+       Hello Java 8!
+
+    Instead, we can directly run the file using the java command:
+       $ java HelloWorld.java
+       Hello Java 11!
+
+
+8. The Not Predicate Method
+
+    A static "not" method has been added to the Predicate interface. We can use it to negate an existing predicate.
+
+
+
+Performance Enhancements:
+------------------------
+
+9.Epsilon, A No-Op Garbage Collector
+
+    This is a new experimental no operation garbage collector. 
+
+    It allocates memory but does not actually collect any garbage.
+
+    Epsilon use cases include testing for performance, memory pressure, virtual machine interface and Extremely short-lived jobs.
+
+
+10. Flight Recorder
+
+    Java Flight Recorder(JFR) is a profiling tool that we can use to gather diagnostics and profiling data from a running Java application.
+
+    It provides a low overhead data collection framework for troubleshooting both Java applications and hotspot JVM.
+
+
+11. Dynamic Class-File Constants
+
+     Java class-file format is extended to support a new constant-pool form named CONSTANT_Dynamic.
+
+    The goal of this is to reduce the cost and disruption of developing new forms of materializable class-file constraints, 
+    by creating a single new constant-pool form that can be parameterized with user-provided behavior.
+
+
+12. Z Garbage Collector
+
+     It is an experimental addition to Java 11.
+
+     It is a low latency garbage collector that can handle heaps ranging from relatively small to very large heaps that are many terabytes in size.
+
+
+Removed and Depricated Modules:
+------------------------------
+
+13. Thread.destroy() & Thread.stop(Throwable)
+
+     These threads have been removed from java as they have been deprecated for several Java SE releases.
+
+
+14.JAVA EE and COBRA
+
+    Standalone versions of the Java EE technologies are available on third-party sites; therefore, there is no need for Java SE to include them.
+
+
+15. JMC and JavaFX
+
+     JDK Mission Control(JMC) is no longer included in the JDK. A standalone version of JMC is now available as a separate download.
+
+     The same is true for JavaFX modules; JavaFX will be available as a separate set of modules outside of the JDK.
+     
